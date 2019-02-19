@@ -2,6 +2,7 @@ import numpy as np
 import keras
 from keras import backend as K
 from keras.models import Sequential
+from keras.models import model_from_json
 from keras.layers import Activation
 from keras.layers.core import Dense, Flatten, Dropout
 from keras.layers import Conv2D, MaxPooling2D
@@ -33,7 +34,10 @@ train_batches = ImageDataGenerator().flow_from_directory(train_data_dir, target_
 print('=========================================')
 print('================VALIDAÇÃO================')
 validation_batches = ImageDataGenerator().flow_from_directory(validation_data_dir, target_size=(img_width,img_height), classes=['positivo','negativo'],batch_size=batch_size)
-
+print('=========================================')
+print('==================TESTES=================')
+print('AINDA NÃO ESTÁ DISPONÍVEL................')
+print('=========================================')
 #img = load_img(train_data_dir+'positiva/layer1')
 #x = img_to_array(img)  # this is a Numpy array with shape (3, 50, 50)
 #x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 50, 50)
@@ -68,7 +72,7 @@ model.add(Dense(units = 2)) # Duas unidades pelo fato que eu tenho duas classes
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
+              optimizer='adam',#optimizer='rmsprop',
               metrics=['accuracy'])
 
 model.fit_generator(
@@ -77,5 +81,10 @@ model.fit_generator(
         epochs=epochs,
         validation_data=validation_batches,
         validation_steps=nb_validation_samples // batch_size)
-model.save_weights('first_try.h5')  # always save your weights after training or during training
+
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
+
+model.save_weights('second_try.h5')  # always save your weights after training or during training
 print('Fim do processamento')

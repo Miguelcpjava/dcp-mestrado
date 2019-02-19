@@ -14,17 +14,25 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='nearest')
 
+gerador_img_v2 = ImageDataGenerator(rescale = 1./255,
+									rotation_range=7,
+									horizontal_flip=True,
+									shear_range=0.2,
+									height_shift_range=0.07,
+									zoom_range=0.2)
+
 #img = load_img('data/train/cats/cat.0.jpg')  # this is a PIL image
 #img = cv2.imread("amostra01.jpg")
-img = load_img('Negativa/c5/negativa06.jpg')
+img = load_img('data/validation/positivo/l4/l40001.jpg')
 x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
 x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
 
 # the .flow() command below generates batches of randomly transformed images
 # and saves the results to the `preview/` directory
 i = 0
-for batch in datagen.flow(x, batch_size=1,
-                          save_to_dir='preview', save_prefix='ruler', save_format='jpeg'):
+#for batch in datagen.flow(x, batch_size=1,
+for batch in gerador_img_v2.flow(x, batch_size=1,
+                          save_to_dir='novos', save_prefix='ruler', save_format='jpeg'):
     i += 1
     if i > 40:
         break  # otherwise the generator would loop indefinitely
