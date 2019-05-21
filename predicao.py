@@ -82,8 +82,10 @@ def trim(im):
 # no final é retornado a imagem com a marcação.
 #def threshold_slow(T, image):
 def threshold_slow(image):
+
 	#Transformar a imagem em array de bytes
 	image_process = np.array(image)
+	cv2.imwrite(save_path+"regua.jpg",image_process)
 	#Pasta onde fica alojados os arquivos cortados
 	path_crop_save = save_path+"/crop/"
 	print("Carregando imagem....")
@@ -117,7 +119,7 @@ def threshold_slow(image):
 			ret,thresh = cv2.threshold(img_gray,127,255,0)
 			M = cv2.moments(thresh)
 			image_class = loaded_model.predict(img_gray,verbose=0)
-			print(">>>>>>>"+str(image_class))
+			#print(">>>>>>>"+str(image_class))
 			#Atribui o valor da classe classificada
 			pred = image_class.argmax(axis=-1)
 			''' Lembrando que o 0 é o numero 7 na régua, bem como
@@ -129,6 +131,7 @@ def threshold_slow(image):
 				crop_write = ""
 				crop_write = path_crop_save+"L1/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
+				print("Cortou na L1")
 				#Aqui é localizado o centro da imagem, ou seja, do 50x50 e depois marca com a cor de cada camada
 				#declarada, neste caso a verde são para identificar o número 7 na régua.
 				if M["m00"] != 0:
@@ -136,42 +139,49 @@ def threshold_slow(image):
 					cY = int(M["m01"] / M["m00"])
 				else:
 					cX, cY = 0, 0
-				image_process = cv2.circle(image_process, (cX, cY), 5, verde, -1)
-				cv2.imwrite(save_path+"regua.jpg",image_process)
+				loda_img = cv2.imread(save_path+"regua.jpg")
+				loda_img = cv2.circle(loda_img, (cX, cY), 5, verde, -1)
+				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 1:
 				crop_write = ""
 				crop_write = path_crop_save+"L2/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
+				print("Cortou na L2")
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
 					cX, cY = 0, 0
-				image_process = cv2.circle(image_process, (cX, cY), 5, amarelo, -1)
-				cv2.imwrite(save_path+"regua.jpg",image_process)
+				loda_img = cv2.imread(save_path+"regua.jpg")	
+				loda_img = cv2.circle(loda_img, (cX, cY), 5, amarelo, -1)
+				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 2:
 				crop_write = ""
 				crop_write = path_crop_save+"L3/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
+				print("Cortou na L3")
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
 					cX, cY = 0, 0
-				image_process = cv2.circle(image_process, (cX, cY), 5, laranja, -1)
-				cv2.imwrite(save_path+"regua.jpg",image_process)
+				loda_img = cv2.imread(save_path+"regua.jpg")	
+				loda_img = cv2.circle(loda_img, (cX, cY), 5, laranja, -1)
+				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 3:
 				crop_write = ""
 				crop_write = path_crop_save+"L4/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg" 
 				cv2.imwrite(crop_write,crop_img_array)
+				print("Cortou na L4")
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
 					cX, cY = 0, 0
-				image_process = cv2.circle(image_process, (cX, cY), 5, vermelho, -1)
-				cv2.imwrite(save_path+"regua.jpg",image_process)
-			else: print("Nernhum")
+				loda_img = cv2.imread(save_path+"regua.jpg")	
+				loda_img = cv2.circle(loda_img, (cX, cY), 5, vermelho, -1)
+				cv2.imwrite(save_path+"regua.jpg",loda_img)
+			else: result = "nenhum"
 
 img = pli.open(path_img)
 threshold_slow(img)
