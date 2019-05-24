@@ -65,7 +65,7 @@ pattern_img_size = 50,50
 #Caminho onde estão e para onde vão os arquivos para experimento
 base_path = "data/test/"
 save_path = "data/test/save5/"
-path_img = "data/test/Casa279.jpg"
+path_img = "data/test/casa120.jpg"
 image_process = None
 #Metodo para reduzir a imagem 
 def trim(im):
@@ -82,7 +82,10 @@ def trim(im):
 # no final é retornado a imagem com a marcação.
 #def threshold_slow(T, image):
 def threshold_slow(image):
-
+	camada1 = 1;
+	camada2 = 1;
+	camada3 = 1;
+	camada4 = 1;
 	#Transformar a imagem em array de bytes
 	image_process = np.array(image)
 	cv2.imwrite(save_path+"regua.jpg",image_process)
@@ -131,55 +134,62 @@ def threshold_slow(image):
 				crop_write = ""
 				crop_write = path_crop_save+"L1/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
-				print("Cortou na L1")
+				print("Cortou na L1 pela "+str(camada1)+"ª vez")
+				camada1 = camada1+1
 				#Aqui é localizado o centro da imagem, ou seja, do 50x50 e depois marca com a cor de cada camada
 				#declarada, neste caso a verde são para identificar o número 7 na régua.
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
-					cX, cY = 0, 0
+					#cX, cY = 0, 0
+					cX, cY = x, y
 				loda_img = cv2.imread(save_path+"regua.jpg")
-				loda_img = cv2.circle(loda_img, (cX, cY), 5, verde, -1)
+				loda_img = cv2.circle(loda_img, (cX, cY), 3, verde, -1)
 				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 1:
 				crop_write = ""
 				crop_write = path_crop_save+"L2/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
-				print("Cortou na L2")
+				print("Cortou na L2 pela "+str(camada2)+"ª vez")
+				camada2 = camada2+1
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
-					cX, cY = 0, 0
+					cX, cY = x, y
 				loda_img = cv2.imread(save_path+"regua.jpg")	
-				loda_img = cv2.circle(loda_img, (cX, cY), 5, amarelo, -1)
+				loda_img = cv2.circle(loda_img, (cX, cY), 3, amarelo, -1)
 				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 2:
 				crop_write = ""
 				crop_write = path_crop_save+"L3/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg"
 				cv2.imwrite(crop_write,crop_img_array)
-				print("Cortou na L3")
+				print("Cortou na L3 pela "+str(camada3)+"ª vez")
+				camada3 = camada3+1
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
-					cX, cY = 0, 0
+					#cX, cY = 0, 0
+					cX, cY = x, y
 				loda_img = cv2.imread(save_path+"regua.jpg")	
-				loda_img = cv2.circle(loda_img, (cX, cY), 5, laranja, -1)
+				loda_img = cv2.circle(loda_img, (cX, cY), 3, laranja, -1)
 				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			elif pred == 3:
 				crop_write = ""
 				crop_write = path_crop_save+"L4/"+file_name_save+"{0}-{1}".format(x,y)+".jpeg" 
 				cv2.imwrite(crop_write,crop_img_array)
-				print("Cortou na L4")
+				print("Cortou na L4 pela "+str(camada4)+"ª vez")
+				camada4 = camada4+1
 				if M["m00"] != 0:
 					cX = int(M["m10"] / M["m00"])
 					cY = int(M["m01"] / M["m00"])
 				else:
-					cX, cY = 0, 0
+					#cX, cY = 0, 0
+					cX, cY = x, y
 				loda_img = cv2.imread(save_path+"regua.jpg")	
-				loda_img = cv2.circle(loda_img, (cX, cY), 5, vermelho, -1)
+				loda_img = cv2.circle(loda_img, (cX, cY), 3, vermelho, -1)
 				cv2.imwrite(save_path+"regua.jpg",loda_img)
 			else: result = "nenhum"
 

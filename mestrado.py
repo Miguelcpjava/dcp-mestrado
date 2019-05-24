@@ -53,7 +53,7 @@ classifier.compile(optimizer = rmsprop, loss = 'categorical_crossentropy', metri
 
 #Gerando a base de treinamento
 train_datagen = ImageDataGenerator(rescale = 1./255,
-									rotation_range=40,
+									rotation_range=30,
 									zoom_range=0.20,
 									brightness_range=[0.6, 1.4])
 #width_shift_range=0.2,
